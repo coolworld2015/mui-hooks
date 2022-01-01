@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {AppContext} from "./index";
+import {Redirect} from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
@@ -18,8 +19,19 @@ import IconButton from '@mui/material/IconButton';
 //import MenuIcon from '@mui/icons-material/Menu';
 
 const Test = () => {
-    const {item, setContextItem} = useContext(AppContext);
+    const {item} = useContext(AppContext);
+    const [isClicked, setIsClicked] = useState(false);
     console.log('item - ', item)
+
+    const clickHandler = (event) => {
+        event.preventDefault();
+        setIsClicked(true)
+    };
+
+    if (isClicked) {
+        return <Redirect to="/cool"/>
+    }
+
   return (
     <div>
       <br />
@@ -74,7 +86,9 @@ const Test = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit" onClick={(e) => clickHandler(e)}>
+                        Login
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Box>
