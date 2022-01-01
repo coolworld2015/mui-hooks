@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useRef} from 'react';
 import {Redirect} from 'react-router-dom';
 import {AppContext} from "./index";
 
@@ -27,6 +27,13 @@ const Header = () => {
         setContextItem({...item,...{searchText: text, itemsCount: 0}});
     };
 
+    let textInput = useRef(null);
+    const onClickHandler = (event) => {
+        textInput.current.value = "";
+        event.preventDefault();
+
+    };
+
     const clickHandler = (event) => {
         event.preventDefault();
         setContextItem({...item,...{name: 'Test', itemsCount: 0}});
@@ -45,7 +52,6 @@ const Header = () => {
             textAlign: "center",
             marginTop:'-80px',
             border1: '1px solid #cccc'}}
-                //onClick={(e) => clickHandler(e)}
         >
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
@@ -59,12 +65,19 @@ const Header = () => {
                         >
                             {/*<MenuIcon />*/}
                         </IconButton>
-                        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+
+                        <Typography
+                            onClick={(e) => onClickHandler(e)}
+                            variant="h4" component="div" sx={{ flexGrow: 1, marginLeft: 33 }}>
                             {item.searchText} ({item.itemsCount})
                         </Typography>
+
                         <TextField id="standard-basic" label="Search" variant="outlined"
-                                   sx={{ input: { color: 'white' } ,label: { color: 'white' } }}
+                                   sx={{ input: { color: 'white' } ,label: { color: 'white' },
+                                       value: text }}
+                                   inputRef={textInput}
                                    onChange={(text) => handleTextFieldChange(text)}/>
+
                         <Button color="inherit" onClick={(e) => handleOnClick(e)}>Search</Button>
                     </Toolbar>
                 </AppBar>
