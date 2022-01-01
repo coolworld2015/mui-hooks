@@ -12,6 +12,7 @@ const Cool = () => {
 
     useEffect(() => {
         //setContextItem({...item,...{name: 'Cool'}});
+        setData([]);
         console.log('searchText - ', item.searchText)
         fetch('https://itunes.apple.com/search?media=&term=' + item.searchText, {
             method: 'get',
@@ -32,11 +33,11 @@ const Cool = () => {
             })
     }, [item.searchText]);
 
-    console.log(item)
+    console.log('data - ', data)
 
     let loading = null;
 
-    if (data.length < 1) {
+    if (data.length < 1 || data === undefined) {
         loading = <h3>Loading...</h3>
     }
 

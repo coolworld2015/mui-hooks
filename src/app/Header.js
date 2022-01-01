@@ -24,7 +24,7 @@ const Header = () => {
 
     const handleOnClick = (e) => {
         console.log('TEXT - ', e.target.value)
-        setContextItem({...item,...{searchText: text, itemsCount: 0}});
+        setContextItem({...item,...{searchText: text}});
     };
 
     let textInput = useRef(null);
