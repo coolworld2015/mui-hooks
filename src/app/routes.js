@@ -1,0 +1,17 @@
+import React from 'react'
+import { Route, Switch } from 'react-router'
+
+import Cool from './Cool';
+import CoolEdit from './CoolEdit';
+
+const Routes = () => {
+    return (
+        <Switch>
+            <Route path="/" component={Cool} exact/>
+            <Route path="/cool" component={Cool}/>
+            <Route path="/cool_edit" component={CoolEdit}/>
+        </Switch>
+    )
+};
+
+export default Routes;
