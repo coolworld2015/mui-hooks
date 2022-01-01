@@ -1,9 +1,8 @@
-import React, {useContext, useReducer, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
 
 import Routes from './routes';
 
-export const AppConfig = React.createContext();
 export const AppContext = React.createContext();
 
 const App = () => {
@@ -38,6 +37,17 @@ const Header = () => {
             marginTop:'-80px',
             border: '1px solid #cccc'}}>
             {item.item.trackName}
+
+        </div>
+    }
+
+    if (item.name === 'root' ) {
+        return <div style={{padding: '20px', fontSize: '30px', textAlign: "center", position: 'fixed',
+            width: '100%',
+            background: 'white',
+            marginTop:'-80px',
+            border: '1px solid #cccc'}}>
+            TEST
 
         </div>
     }
