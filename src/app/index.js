@@ -7,7 +7,7 @@ import Header from './Header';
 export const AppContext = React.createContext();
 
 const App = () => {
-    const [item, setItem] = useState({name:'root', itemsCount:0, size:0});
+    const [item, setItem] = useState({name:'root', searchText: 'Marvel', itemsCount:0});
     const setContextItem = ((item) => {
         return setItem(item);
     });

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {AppContext} from "./index";
 import {Redirect} from "react-router-dom";
 
@@ -19,12 +19,19 @@ import IconButton from '@mui/material/IconButton';
 //import MenuIcon from '@mui/icons-material/Menu';
 
 const Test = () => {
-    const {item} = useContext(AppContext);
+    const {item, setContextItem} = useContext(AppContext);
     const [isClicked, setIsClicked] = useState(false);
-    console.log('item - ', item)
+
+    console.log('Test - ', item)
+
+    useEffect(() => {
+        setContextItem({...item,...{name: 'Test', itemsCount: 0}});
+    }, []);
+
 
     const clickHandler = (event) => {
         event.preventDefault();
+        setContextItem({...item,...{name: 'Cool', itemsCount: 0}});
         setIsClicked(true)
     };
 

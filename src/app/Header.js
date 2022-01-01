@@ -2,10 +2,30 @@ import React, {useContext, useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import {AppContext} from "./index";
 
+import Button from '@material-ui/core/Button';
+import TextField from '@mui/material/TextField';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+
 const Header = () => {
     const {item, setContextItem} = useContext(AppContext);
     const [isClicked, setIsClicked] = useState(false);
-    console.log('item - ', item)
+    const [text, setText] = useState('Marvel');
+
+    console.log('Header - ', item)
+
+    const handleTextFieldChange = (e) => {
+        setText(e.target.value);
+        console.log('TEXT - ', e.target.value)
+    };
+
+    const handleOnClick = (e) => {
+        console.log('TEXT - ', e.target.value)
+        setContextItem({...item,...{searchText: text, itemsCount: 0}});
+    };
 
     const clickHandler = (event) => {
         event.preventDefault();
@@ -17,39 +37,73 @@ const Header = () => {
         return <Redirect to="/test"/>
     }
 
-    if (item.name === 'Cool' && item.item !== undefined ) {
-        return <div style={{padding: '20px', fontSize: '30px', textAlign: "center", position: 'fixed',
-            width: '100%',
-            background: 'white',
+    if (item.name === 'Cool') {
+        console.log('Cool - ', item)
+        return <div style={{
+            width: '99%',
+            position: 'fixed',
+            textAlign: "center",
             marginTop:'-80px',
-            border: '1px solid #cccc'}}>
-            {item.name} ({item.itemsCount})
-
-        </div>
-    }
-
-    if (item.name === 'CoolEdit' && item.item !== undefined ) {
-        return <div style={{padding: '20px', fontSize: '30px', textAlign: "center", position: 'fixed',
-            width: '100%',
-            background: 'white',
-            marginTop:'-80px',
-            border: '1px solid #cccc'}}>
-            {item.item.trackName}
-
-        </div>
-    }
-
-    return (
-        <div style={{padding: '20px', fontSize: '30px', textAlign: "center", position: 'fixed',
-            width: '100%',
-            background: 'white',
-            marginTop:'-80px',
-            border: '1px solid #cccc'}}
-             onClick={(e) => clickHandler(e)}
+            border1: '1px solid #cccc'}}
+                //onClick={(e) => clickHandler(e)}
         >
-            {item.name} ({item.itemsCount})
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                        >
+                            {/*<MenuIcon />*/}
+                        </IconButton>
+                        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                            {item.searchText} ({item.itemsCount})
+                        </Typography>
+                        <TextField id="standard-basic" label="Search" variant="outlined"
+                                   sx={{ input: { color: 'white' } ,label: { color: 'white' } }}
+                                   onChange={(text) => handleTextFieldChange(text)}/>
+                        <Button color="inherit" onClick={(e) => handleOnClick(e)}>Search</Button>
+                    </Toolbar>
+                </AppBar>
+            </Box>
+
         </div>
-    )
+    }
+
+    if (item.name === 'CoolEdit' && item.item!== undefined) {
+        console.log('CoolEdit - ', item)
+        return <div style={{padding: '0px', fontSize: '30px', textAlign: "center", position: 'fixed',
+            width: '99%',
+            background: 'white',
+            marginTop:'-80px',
+            border: '1px solid #cccc'}}>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                        >
+                            {/*<MenuIcon />*/}
+                        </IconButton>
+                        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                            {item.item.trackName}
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+            </Box>
+
+
+        </div>
+    }
+
+    return null
 };
 
 export default Header;

@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Redirect} from 'react-router';
 import {AppContext} from "./index";
+import Avatar from '@mui/material/Avatar';
 
 const Cool = () => {
     const [data, setData] = useState([]);
@@ -10,8 +11,9 @@ const Cool = () => {
     const {item, setContextItem} = useContext(AppContext);
 
     useEffect(() => {
-        console.log('item - ', item)
-        fetch('https://itunes.apple.com/search?media=movie&term= marvel', {
+        //setContextItem({...item,...{name: 'Cool'}});
+        console.log('searchText - ', item.searchText)
+        fetch('https://itunes.apple.com/search?media=&term=' + item.searchText, {
             method: 'get',
             headers: {
                 'Accept': 'application/json',
@@ -22,12 +24,13 @@ const Cool = () => {
             .then(response => {
                 console.log(response.results);
                 setData(response.results);
-                setContextItem({...item,...{name: 'Cool', itemsCount: response.results.length}});
+                setContextItem({...item,...{name: 'Cool',
+                        itemsCount: response.results.length}});
             })
             .catch((error) => {
                 console.log('error ' + error);
             })
-    }, []);
+    }, [item.searchText]);
 
     console.log(item)
 
@@ -66,7 +69,7 @@ const User = ({user}) => {
 
     const clickHandler = (event) => {
         event.preventDefault();
-        setContextItem({...item,...{name: 'Clicked', item: user}});
+        setContextItem({...item,...{name: 'Cool', item: user}});
         setIsClicked(true)
     };
 
@@ -77,7 +80,11 @@ const User = ({user}) => {
     return (
         <div style={{padding: '20px', marginTop:'0px', border: '1px solid #cccc'}}
              onClick={(e) => clickHandler(e)}>
-
+            <img
+                src={user.artworkUrl100.replace('100x100bb.jpg', '500x500bb.jpg')}
+                width="189" height="255"
+            />
+            <br/>
             {user.trackName} - {user.releaseDate.split('-')[0]} - {user.primaryGenreName}
 
         </div>
