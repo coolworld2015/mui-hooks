@@ -12,26 +12,29 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import AppBar from '@mui/material/AppBar';
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-//import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
 
 const Test = () => {
     const {item, setContextItem} = useContext(AppContext);
     const [isClicked, setIsClicked] = useState(false);
+    const [open, setOpen] = useState(false);
 
-    console.log('Test - ', item)
+    console.log('Test - ', item);
 
     useEffect(() => {
-        setContextItem({...item,...{name: 'Test', itemsCount: 0}});
+        setContextItem({...item, ...{name: 'Test', itemsCount: 0}});
     }, []);
 
 
     const clickHandler = (event) => {
         event.preventDefault();
-        setContextItem({...item,...{name: 'Cool', itemsCount: 0}});
+        setContextItem({...item, ...{name: 'Cool', itemsCount: 0}});
         setIsClicked(true)
     };
 
@@ -39,68 +42,107 @@ const Test = () => {
         return <Redirect to="/cool"/>
     }
 
-  return (
-    <div>
-      <br />
-      <Button variant="contained" color="primary">
-        Primary
-      </Button>
+    return (
+        <div>
+            <br/>
+            <Button variant="contained" color="primary">
+                Primary
+            </Button>
+            <hr/>
 
-      <hr />
+            <Fab color="primary" aria-label="add">
+                <AddIcon/>
+            </Fab>
+            <Fab color="secondary" aria-label="edit">
+                <EditIcon/>
+            </Fab>
+            <Fab variant="extended">
+                <NavigationIcon/>
+                Navigate
+            </Fab>
+            <Fab disabled aria-label="like">
+                <FavoriteIcon/>
+            </Fab>
+            <hr/>
 
-      <Fab color="primary" aria-label="add">
-        <AddIcon />
-      </Fab>
-      <Fab color="secondary" aria-label="edit">
-        <EditIcon />
-      </Fab>
-      <Fab variant="extended">
-        <NavigationIcon />
-        Navigate
-      </Fab>
-      <Fab disabled aria-label="like">
-        <FavoriteIcon />
-      </Fab>
+            <form noValidate>
+                <TextField
+                    id="date"
+                    label="Birthday"
+                    type="date"
+                    defaultValue="2017-05-24"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+            </form>
+            <hr/>
 
-        <hr />
+            <Box sx={{flexGrow: 1}}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{mr: 2}}
+                            onClick={() => open? setOpen(false): setOpen(true)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        </Typography>
+                        <Button color="inherit" onClick={(e) => clickHandler(e)}>
+                            Login
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+            </Box>
+            <hr/>
 
-        <form noValidate>
-            <TextField
-                id="date"
-                label="Birthday"
-                type="date"
-                defaultValue="2017-05-24"
-                InputLabelProps={{
-                    shrink: true,
-                }}
-            />
-        </form>
-
-        <hr />
-
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        {/*<MenuIcon />*/}
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        News
-                    </Typography>
-                    <Button color="inherit" onClick={(e) => clickHandler(e)}>
-                        Login
+            <Container maxWidth="sm">
+                <Box
+                    sx={{
+                        width: 300,
+                        height: 300,
+                        margin: 'auto',
+                        bgcolor: '#cfe8fc',
+                        '&:hover1': {
+                            backgroundColor: 'primary.main',
+                            opacity: [0.9, 0.8, 0.7],
+                        },
+                    }}
+                >
+                    <TextField error1 helperText="Value is requred" label="Login"
+                               variant="standard"
+                               autoComplete="off"/>
+                    <br/>
+                    <Button variant="contained" color="primary">
+                        Submit
                     </Button>
-                </Toolbar>
-            </AppBar>
-        </Box>
-    </div>
-  );
+                </Box>
+                <Drawer
+                    sx={{
+                        width: '50px',
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            width: '40px',
+                            boxSizing: 'border-box',
+                        },
+                    }}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                >
+                    <Button variant="contained" color="primary">
+                        Submit
+                    </Button>
+                </Drawer>
+            </Container>
+        </div>
+    )
+        ;
 };
 
 export default Test;
